@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hosbital Management system</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/brands.min.css" integrity="sha512-+oRH6u1nDGSm3hH8poU85YFIVTdSnS2f+texdPGrURaJh8hzmhMiZrQth6l56P4ZQmxeZzd2DqVEMqQoJ8J89A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/fontawesome.min.css" integrity="sha512-RvQxwf+3zJuNwl4e0sZjQeX7kUa3o82bDETpgVCH2RiwYSZVDdFJ7N/woNigN/ldyOOoKw8584jM4plQdt8bhA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/regular.min.css" integrity="sha512-aNH2ILn88yXgp/1dcFPt2/EkSNc03f9HBFX0rqX3Kw37+vjipi1pK3L9W08TZLhMg4Slk810sPLdJlNIjwygFw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/solid.min.css" integrity="sha512-uj2QCZdpo8PSbRGL/g5mXek6HM/APd7k/B5Hx/rkVFPNOxAQMXD+t+bG4Zv8OAdUpydZTU3UHmyjjiHv2Ww0PA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/solid.min.css" integrity="sha512-uj2QCZdpo8PSbRGL/g5mXek6HM/APd7k/B5Hx/rkVFPNOxAQMXD+t+bG4Zv8OAdUpydZTU3UHmyjjiHv2Ww0PA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/svg-with-js.min.css" integrity="sha512-j+8sk90CyNqD7zkw9+AwhRuZdEJRLFBUg10GkELVu+EJqpBv4u60cshAYNOidHRgyaKNKhz+7xgwodircCS01g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/v4-font-face.min.css" integrity="sha512-hpWf+VbTLvBF+RSSdHLpJg+nchmQ3mk1+y9b/ICJSQdZt9B4v+zgZCsD54GAI8fV7MbFq7FhrdWgzPmxuluwsw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <link rel="stylesheet" href="{% static 'base/style.css' %}">
+</head>
+<body>
+    <header class="main-header">
+        <div>
+        <a class="logo" href="{% url 'home' %}"> <i class="far fa-hospital"></i> HospitalEase</a>
+        </div>
+          
+     <nav class="nav">
+         <a href="#hom">Home</a>
+         <a href="#services">Services</a>
+         <a href="#abt">About</a>
+         
+     </nav>
+  
+    
+     </header>
+     <section class="sec1">
+        <div class="home" id="hom">
+          <div class="image">
+              <img src="../../static/base/images2/medical-research-animate.svg"  >
+          </div>
+          <div class="content">
+              <h3>Maintain your well-being, Ensure your safety.</h3>
+              <p>Ensuring your safety and well-being is our top priority at Us. Join us in a nurturing space that combines heartfelt care with advanced technology, fostering a therapeutic atmosphere committed to your health and recovery. </p>
+              <a href="{% url 'home' %}" ><button class="btn"> Start Now</button></a>
+          </div>
+      
+         </div>
+    </section>
+    <!-- services fady satrt html -->
+    <!-- Start Services -->
+    <div class="services" id="services">
+        <h1 class="doc head">WHAT WE  <span>OFFER</span></h1>
+        <div class="container">
+          <div class="box">
+            <i class="fa-solid fa-user-doctor size"></i>
+            <h3>Doctors</h3>
+            <div class="info">
+              <p>+150</p>
+            </div>
+          </div>
+          <div class="box">
+            <i class="fa-solid fa-hospital-user size"></i>
+            <h3>Recovered Patients</h3>
+            <div class="info">
+                <p>+1500</p>
+            </div>
+          </div>
+          <div class="box">
+            <i class="fa-solid fa-bed-pulse size"></i>
+            <h3>Bed Accommodation</h3>
+            <div class="info">
+                <p>+700</p>
+            </div>
+          </div>
+          <div class="box">
+            <i class="fa-solid fa-truck-medical size"></i>
+            <h3>Medical truck</h3>
+            <div class="info">
+                <p>+70</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Services -->
+    <!-- services fady end html  -->
+    <!-- <section id="serv">
+        <h1 class="doc head">WHAT WE  <span>OFFER</span></h1>
+        <div class="servv">
+            <div>
+                <i class="fa-solid fa-user-doctor  fa-lg"></i>
+                <h1>140+</h1>
+                <p>Doctors At Work</p>
+            </div>
+            <div>
+                <i class="fa-solid fa-person"></i>
+                <h1>1040+</h1>
+                <p>Satisfied Patients</p>
+            </div>
+            <div>
+                <i class="fa-solid fa-bed"></i>
+                <h1>500+</h1>
+                <p>Bed Facility</p>
+            </div>
+            <div>
+                <i class="fa-solid fa-hospital"></i>
+                <h1>80+</h1>
+                <p>Available Hospitals</p>
+            </div>
+        </div>
+      </section> -->
+      <section id="abt">
+        <h1 class="us">About Our <span class="abo"> Organization</span></h1>
+        <div class="about" id="abt">
+            <div>
+                <img src="../../static/base/images2/about-us-page-animate.svg" width="600px">
+            </div>
+            <div>
+                <h1>Nurturing Your Well-being</h1>
+                <p>Committed to Healthcare Excellence for [number] Years, our devoted team of healthcare experts is dedicated to delivering individualized, empathetic care. We integrate cutting-edge technology to safeguard your well-being and uphold a legacy of excellence in health services.
+                </p>
+            </div>
+        </div>
+     </section>
+</body>
+</html>

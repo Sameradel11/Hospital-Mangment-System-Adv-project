@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Discharge</title>
+    <link rel="stylesheet" href="{% static 'base/add.css' %}">
+</head>
+<body>
+    
+    <h2>Discharge</h2>
+    <form  method="POST">
+        {% csrf_token %}
+        <label for="doctor_name">Reason</label>
+        <input type="text" id="reason" name="reason" required><br>
+
+        <input type="submit" value="Discharge">
+    </form>
+</body>
+</html>

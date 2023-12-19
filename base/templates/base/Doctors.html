@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctors Information</title>
+    <link rel="stylesheet" href="{% static 'base/project.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+</head>
+<body>
+
+    <h2>Doctors Information</h2>
+    <form method="GET" class="search-container-info">
+        {% csrf_token %}
+        <input type="text" placeholder="Search for doctors..." id="q" name='q'>
+        <button type="submit">Search <i class="fa fa-search"></i></button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Specialization</th>
+                <th>Phone Number</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for doctor in doctors %}
+            <tr>
+                <td>{{ doctor.DoctorID }}</td>
+                <td>{{ doctor.Name }}</td>
+                <td>{{ doctor.Specialization }}</td>
+                <td>
+                    
+                    {% if doctor.doctor_contactdetails_set.all %}
+                        
+                        {% for number in doctor.doctor_contactdetails_set.all %}
+                            {{ number.ContactDetails }}
+                            
+                            {% if not forloop.last %} , {% endif %}
+                            
+
+                        {% endfor %}
+                            
+                    {% else %}
+                        No mobile numbers
+                    {% endif %}
+                        
+                    <a href="{% url 'add_doctor_mobile' doctor.DoctorID %}">
+                        <i class="fas fa-plus edit-icon"></i>
+                    </a>
+                </td>
+                <td class="action-icons">
+                    <a href="{% url 'remove_doctor' doctor.DoctorID %}">
+                        <i class="fas fa-trash delete-icon"></i>
+                    </a>
+                    <a href="{% url 'edit_doctor' doctor.DoctorID %}">
+                        <i class="fas fa-edit edit-icon"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Plus sign icon positioned at the bottom right corner of the page -->
+    <div class="add-info">
+        <a href="{% url 'add_doctor' %}">
+            <i class="fas fa-plus-circle plus-icon"></i>
+        </a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Doctor</title>
+    <link rel="stylesheet" href="{% static 'base/edit_doctor.css' %}">
+</head>
+<body>
+    <h2>Edit Doctor</h2>
+
+    <form method="POST" >
+        {% csrf_token %}
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="{{ doctor.Name }}">
+        </div>
+        <div>
+            <input type="text" id="list" name="doctor_specialization" list="specialization-list" value="{{doctor.Specialization}}" required/><br>
+            <datalist id="specialization-list">
+                <select id="specialization" name="specialization"required >
+                    {% for specialization in specializations %}
+                    <option value="{{ specialization }}">{{ specialization }}</option>
+                    {% endfor %}
+                </select><br>
+            </datalist>
+        </div>
+        <button type="submit">Update</button>
+    </form>
+</body>
+</html>

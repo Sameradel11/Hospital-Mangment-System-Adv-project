@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rooms Information</title>
+    <link rel="stylesheet" href="{% static 'base/project.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <h2>Rooms Information</h2>
+
+    <form method="GET" class="search-container-info">
+        {% csrf_token %}
+        <div class="search-container">
+            <input type="text" placeholder="Search for rooms..." id="q" name='q'>
+            <button type="submit">Search <i class="fa fa-search"></i></button>
+        </div>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Room Number</th>
+                <th>Room Type</th>
+                <th>Room Avaiable</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for room in rooms %}
+            <tr>
+                <td>{{ room.RoomNumber }}</td>
+                <td>{{ room.Type }}</td>
+                <td>{{ room.Availability }}</td>
+                <td class="action-icons">
+                    <a href="{% url 'remove_room' room.RoomNumber %}">
+                        <i class="fas fa-trash delete-icon"></i>
+                    </a>
+
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    
+    <div class="add-info">
+        <a href="{% url 'add_room' %}">
+            <i class="fas fa-plus-circle plus-icon"></i>
+        </a>
+    </div>
+</body>
+</html>

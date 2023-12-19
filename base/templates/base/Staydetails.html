@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'base/project.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Stay Details Information</title>
+</head>
+<body>
+    <h2>Stay Details Information</h2>
+    <a href="{% url 'home' %}">Home</a>
+
+    <form method="GET" class="search-container-info">
+        {% csrf_token %}
+        <input type="text" placeholder="Search for information..." id="q" name='q'>
+        <button type="submit">Search <i class="fa fa-search"></i></button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Patient Name</th>
+                <th>Administered treatments</th>
+                <th>Condition updates</th>
+                <th>Meals</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for details in staydetails %}
+            <tr>
+                <td>{{ details.StayDetailsID }}</td>
+                <td>{{ details.Date }}</td>
+                <td>{{ details.AdmissionID.PatientID.FullName }}</td>
+
+                <td>
+                    {% for admin_treatment in details.staydetails_administeredtreatments_set.all %}
+                        <p>{{ admin_treatment.dateadded | date:"M d, Y h:i A" }} {{ admin_treatment.AdministeredTreatments }}</p>
+                    {% endfor %}
+                    <a href="{% url 'add_admin_treatment' details.StayDetailsID %}">
+                        <i style="color: black;" class="fas fa-plus edit-icon"></i>
+                    </a>
+                </td>
+
+                <td>
+                    {% for update in details.staydetails_conditionupdates_set.all %}
+                        <p>{{ update.dateadded | date:"M d, Y h:i A" }} {{ update.ConditionUpdates }}</p>
+                    {% endfor %}
+                    <a href="{% url 'add_condition_update' details.StayDetailsID %}">
+                        <i style="color: black;" class="fas fa-plus edit-icon"></i>
+                    </a>
+                </td>
+
+                <td>
+                    {% for meal in details.staydetails_meals_set.all %}
+                        <p>{{ meal.Meals }}</p>
+                    {% endfor %}
+                    <a href="{% url 'add_meal' details.StayDetailsID %}">
+                        <i style="color: black;" class="fas fa-plus edit-icon"></i>
+                    </a>
+                </td>
+
+                <td class="action-icons">
+                    <a href="{% url 'remove_staydetails' details.StayDetailsID %}">
+                        <i class="fas fa-trash delete-icon"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

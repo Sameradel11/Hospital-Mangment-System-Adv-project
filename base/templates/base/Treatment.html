@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Treatment Information</title>
+    <link rel="stylesheet" href="{% static 'base/project.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <h2>Treatments info </h2>
+    <form method="GET" class="search-container-info">
+        {% csrf_token %}
+        <input type="text" placeholder="Search for information..." id="q" name='q'>
+        <button type="submit">Search <i class="fa fa-search"></i></button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Procedure</th>
+                <th>Appointment</th>
+                <th>Medications</th>
+                <th>Delete</th>
+                <th>Add medications</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for treatment in treatments %}
+                <tr>
+                    <td> {{ treatment.TreatmentID }} </td>
+                    <td>{{ treatment.ProcedureDescription }}</td>
+                    <td> {{ treatment.AppointmentID }}</td>
+                    <td> 
+                        {% if treatment.treatment_medications_set.all %}
+                            {% for medication in treatment.treatment_medications_set.all %}
+                                {{ medication.Medications }} 
+                                {% if not forloop.last %} , {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            No medicines
+                        {% endif %}
+                    </td>
+                    <td class="action-icons">
+                        <a href="{% url 'remove_treatment' treatment.TreatmentID %}">
+                            <i class="fas fa-trash delete-icon"></i>
+                        </a>
+                    </td>
+                    <td class="plus-inline-icon">
+                        <a href="{% url 'add_medicine' treatment.TreatmentID %}">
+                            <i class="fas fa-plus edit-icon"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

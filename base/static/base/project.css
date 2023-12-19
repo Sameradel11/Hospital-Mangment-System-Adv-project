@@ -1,0 +1,100 @@
+/* Base styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #92bef8;
+    font-weight: bold;
+}
+
+/* Additional CSS for the icons */
+.action-icons {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.delete-icon,
+.edit-icon {
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.delete-icon {
+    background-color: #E9F5F3;
+    color: red;
+}
+
+.edit-icon {
+    background-color: #E9F5F3;
+    color: black;
+}
+
+.delete-icon:hover{
+    background-color: #d9544fac;
+}
+.edit-icon:hover {
+    background-color: #030e1a76;
+}
+
+
+/* Additional CSS for the plus icon */
+.add-info {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+.plus-icon {
+    font-size: 40px;
+    color: black; /* Adjust color as needed */
+    cursor: pointer;
+}
+
+/* Additional CSS for the search bar */
+.search-container-info {
+    padding: 20px;
+}
+
+.search-container-info input[type=text] {
+    padding: 10px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+.search-container-info button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #E9F5F3;
+    background-color: black;
+}
+
+.search-container-info button:hover {
+    background-color: #030e1ac3;
+}

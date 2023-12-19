@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admission Information</title>
+    <link rel="stylesheet" href="{% static 'base/project.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <h2>Discharge Information</h2>
+    <form method="GET" class="search-container-info">
+        {% csrf_token %}
+        <input type="text" placeholder="Search for information..." id="q" name='q'>
+        <button type="submit">Search <i class="fa fa-search"></i></button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Reason</th>
+                <th>Patient Name </th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for discharge in discharges %}
+                <tr>
+                    <td> {{ discharge.DischargeID }} </td>
+                    <td> {{ discharge.DischargeDate }} </td>
+                    <td> {{ discharge.Reason }} </td>
+                    <td> {{ discharge.AdmissionID }}</td>
+
+                    <td class="action-icons">
+                        <a href="{% url 'remove_discharge' discharge.DischargeID %}">
+                            <i class="fas fa-trash delete-icon"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

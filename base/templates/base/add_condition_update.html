@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Add Conditin</title>
+    <link rel="stylesheet" href="{% static 'base/add.css' %}">
+</head>
+<body>
+    <h2>Add Condition</h2>
+    <form  method="POST">
+        {% csrf_token %}
+
+        <label for="" >condition update </label>
+        <input type="text" id ='condition_update' name="condition_update" required />
+        <input type="submit" value="Update Condition">
+    </form>
+</body>
+</html>

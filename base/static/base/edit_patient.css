@@ -1,0 +1,38 @@
+/* edit_patient.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form {
+    width: 300px;
+    margin: 0 auto;
+}
+
+label, input[type="text"], input[type="date"] {
+    display: block;
+    margin-bottom: 10px;
+}
+
+input[type="text"], input[type="date"] {
+    width: calc(100% - 10px);
+    padding: 5px;
+}
+
+button {
+    padding: 8px 20px;
+    background-color:black ;
+    color: #E9F5F3;  
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: rgba(0, 0, 0, 0.87);
+}
