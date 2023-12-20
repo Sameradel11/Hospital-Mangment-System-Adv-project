@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Appointment Information</title>
+    <link rel="stylesheet" href="{% static 'base/project.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <h2>Appointment Information</h2>
+    <form method="GET" class="search-container-info">
+        {% csrf_token %}
+        <input type="text" placeholder="Search for information..." id="q" name='q'>
+        <button type="submit">Search <i class="fa fa-search"></i></button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Patient Name</th>
+                <th>Doctor Name</th>
+                <th>Specialization</th>
+                <th>Delete</th>
+                <th>Add Treatment</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for appointment in appointments %}
+            <tr>
+                <td>{{ appointment.Appointment_ID }}</td>
+                <td>{{ appointment.Date|date:"Y-m-d" }}</td>
+                <td>{{ appointment.Patient_ID.Name }}</td>
+                <td>{{ appointment.Doctor_ID.Name }}</td>
+                <td>{{ appointment.Doctor_ID.Specialization }}</td>
+                <td class="action-icons">
+                    <a href="{% url 'remove_appointment' appointment.Appointment_ID %}">
+                        <i class="fas fa-trash delete-icon"></i>
+                    </a>
+                </td>
+
+                <td>
+                    <a href="{% url 'add_treatment' appointment.Appointment_ID %}">
+                        <i class="fas fa-plus edit-icon"></i>
+                    </a>
+                </td>
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Plus sign icon positioned at the bottom right corner of the page -->
+    <div class="add-info">
+        <a href="{% url 'add_appointment' %}">
+            <i class="fas fa-plus-circle plus-icon"></i>
+        </a>
+        
+    </div>
+</body>
+</html>

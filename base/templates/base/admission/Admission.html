@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admission Information</title>
+    <link rel="stylesheet" href="{% static 'base/project.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <h2>Admission Information</h2>
+    <form method="GET" class="search-container-info">
+        {% csrf_token %}
+        <input type="text" placeholder="Search for information..." id="q" name='q'>
+        <button type="submit">Search <i class="fa fa-search"></i></button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Patient</th>
+                <th>Room Number</th>
+                <th>Delete</th>
+                <th>Discharge</th>
+                <th>Admission Treatment</th>
+                <th>Show Admission Treatment</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for admission in admissions %}
+                <tr>
+                    <td> {{ admission.Admission_ID }} </td>
+                    <td> {{ admission.Start_Date }}   </td>
+                    <td> {{ admission.Patient_ID }}   </td>
+                    <td> {{ admission.Room_Number }}  </td>
+                    <td class="action-icons">
+                        <a href="{% url 'remove_admission' admission.Admission_ID %}">
+                            <i class="fas fa-trash delete-icon"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{% url 'add_discharge' admission.Admission_ID %}">
+                            <i style="color: black; " class="fas fa-plus edit-icon"></i>
+                        </a>
+                    </td>
+                    <td >
+                        <a href="{% url 'add_admin_treatment' admission.Admission_ID %}">
+                            <i style="color: black; " class="fas fa-plus edit-icon"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{% url 'admission_treatments' admission.Admission_ID %}">
+                            <i style="color: black; " class="fas fa-eye edit-icon"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

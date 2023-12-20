@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Treatment Information</title>
+    <link rel="stylesheet" href="{% static 'base/project.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+
+</head>
+<body>
+    <h2>Treatment Information</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Treatment ID</th>
+                <th>Date & Time</th>
+                <th>Treatment Title</th>
+                <th>Treatment Details</th>
+                <th>Price</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Replace the table data below with dynamic content from your database -->
+                {% for treatment in admissiontreatment %}
+                <tr>
+                    <td>{{ treatment.Treatment_ID }}</td>
+                    <td>{{ treatment.DateTime }}</td>
+                    <td>{{ treatment.Treatment_Title }}</td>
+                    <td>{{ treatment.Treatment_Details }}</td>
+                    <td>{{ treatment.price }}</td>
+                    <td class="action-icons">
+                        <a href="{% url 'remove_admission_treatment' treatment.Treatment_ID %}">
+                            <i class="fas fa-trash delete-icon"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+                
+
+        </tbody>
+    </table>
+</body>
+</html>

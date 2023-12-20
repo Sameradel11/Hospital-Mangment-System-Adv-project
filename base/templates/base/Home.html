@@ -29,8 +29,8 @@
 
         <div style="width: 255px; height: 157px; left: 1155px; top: 302px; position: absolute">
             <div style="width: 255px; height: 157px; left: 0px; top: 0px; position: absolute; background: #5b8fd3; border-radius: 8px"></div>
-            <div style="left: 58px; top: 109px; position: absolute; color: rgb(255, 255, 255); font-size: 26px; font-family: Montserrat; font-weight: 700; word-wrap: break-word">Discharge</div>
-            <img style="width: 80px; height: 80px; left: 88px; top: 23px; position: absolute" src="{% static 'base/images/Discharge.png' %}" />
+            <div style="left: 58px; top: 109px; position: absolute; color: rgb(255, 255, 255); font-size: 26px; font-family: Montserrat; font-weight: 700; word-wrap: break-word">Employee</div>
+            <img style="width: 80px; height: 80px; left: 88px; top: 23px; position: absolute" src="{% static 'base/images/Doctor.png' %}" />
         </div>
 
         <div style="width: 255px; height: 157px; left: 870px; top: 90px; position: absolute">
@@ -41,7 +41,7 @@
 
         <div style="width: 255px; height: 157px; left: 870px; top: 302px; position: absolute">
             <div style="width: 255px; height: 157px; left: 0px; top: 0px; position: absolute; background: #5b8fd3; border-radius: 8px"></div>
-            <div style="left: 47px; top: 109px; position: absolute; color: rgb(255, 255, 255); font-size: 26px; font-family: Montserrat; font-weight: 700; word-wrap: break-word">Stay Details</div>
+            <div style="left: 47px; top: 109px; position: absolute; color: rgb(255, 255, 255); font-size: 26px; font-family: Montserrat; font-weight: 700; word-wrap: break-word">Bills</div>
             <img style="width: 80px; height: 80px; left: 95px; top: 23px; position: absolute" src="{% static 'base/images/Stay Details.png' %}" />
         </div>
 
@@ -64,7 +64,6 @@
                 <img style="width: 21px; height: 21px; left: 41px; top: 367px; position: absolute" src="{% static 'base/images/Appointment.png' %}" />
                 <img style="width: 21px; height: 21px; left: 40px; top: 306px; position: absolute" src="{% static 'base/images/Admissions.png' %}" />
                 <img style="width: 21px; height: 21px; left: 40px; top: 426px; position: absolute" src="{% static 'base/images/Stay Details.png' %}" />
-                <img style="width: 21px; height: 21px; left: 40px; top: 485px; position: absolute" src="{% static 'base/images/Discharge.png' %}" />
                 <img style="width: 19px; height: 19px; left: 40px; top: 248px; position: absolute" src="{% static 'base/images/Treatment.png' %}" />
                 <img style="width: 18px; height: 18px; left: 40px; top: 191px; position: absolute" src="{% static 'base/images/Appointment.png' %}" />
                 <img style="width: 19px; height: 19px; left: 40px; top: 128px; position: absolute" src="{% static 'base/images/Doctor.png' %}" />
@@ -75,8 +74,7 @@
             <div style="left: 73px; top: 249px; position: absolute; color: black; font-size: 14px; font-family: Montserrat; font-weight: 500; word-wrap: break-word"><a href="{% url 'treatment' %}" style="text-decoration: none;color: black;"> Treatment</a></div>
             <div style="left: 73px; top: 308px; position: absolute; color: black; font-size: 14px; font-family: Montserrat; font-weight: 500; word-wrap: break-word"><a href="{% url 'admission' %}" style="text-decoration: none;color: black;">Admissions</a></div>
             <div style="left: 73px; top: 367px; position: absolute; color: black; font-size: 14px; font-family: Montserrat; font-weight: 500; word-wrap: break-word"><a href="{% url 'room' %}" style="text-decoration: none;color: black;">Room</a></div>
-            <div style="left: 73px; top: 426px; position: absolute; color: black; font-size: 14px; font-family: Montserrat; font-weight: 500; word-wrap: break-word"><a href="{% url 'staydetails' %}" style="text-decoration: none;color: black;">Stay Details</a></div>
-            <div style="left: 73px; top: 485px; position: absolute; color: black; font-size: 14px; font-family: Montserrat; font-weight: 500; word-wrap: break-word"><a href="{% url 'discharge' %}" style="text-decoration: none;color: black;">Discharge</a></div>
+            <div style="left: 73px; top: 426px; position: absolute; color: black; font-size: 14px; font-family: Montserrat; font-weight: 500; word-wrap: break-word"><a href="{% url 'employee' %}" style="text-decoration: none;color: black;"> Employee </a></div>
             <div style="left: 75px; top: 131px; position: absolute; color: black; font-size: 14px; font-family: Montserrat; font-weight: 500; word-wrap: break-word"><a href="{% url 'doctors' %}" style="text-decoration: none;color: black;">Doctor</a></div>
             <div style="left: 75px; top: 72px; position: absolute; color: black; font-size: 14px; font-family: Montserrat; font-weight: 500; word-wrap: break-word"><a href="{% url 'patient' %}" style="text-decoration: none;color: black;">Patient</a></div>
             <div style="left: 75px; top: 11px; position: absolute; color: black; font-size: 14px; font-family: Montserrat; font-weight: 500; word-wrap: break-word"><a href="{% url 'start' %}" style="text-decoration: none;color: black;"> Home</a></div>

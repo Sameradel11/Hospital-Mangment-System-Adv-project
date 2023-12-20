@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Room</title>
+    <link rel="stylesheet" href="{% static 'base/add.css' %}">
+</head>
+<body>
+    <h2>Add Room</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="room_number">Room Number:</label>
+        <input type="text" id="room_number" name="room_number" placeholder="Enter room number" required><br>
+        
+        <label for="room_type">Room Type:</label>
+        <input type="text" id="room_type" name="room_type" placeholder="Enter room type" required><br>
+        
+        <label for="Room_Price">Room Price:</label>
+        <input type="text" id="Room_Price" name="Room_Price" placeholder="Enter room price per day" required><br>
+
+
+        <input type="submit" value="Add Room">
+    </form>
+</body>
+</html>

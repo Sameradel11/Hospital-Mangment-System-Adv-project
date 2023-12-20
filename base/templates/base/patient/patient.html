@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Patients Information</title>
+    <link rel="stylesheet" href="{% static 'base/project.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <h2>Patients Information</h2>
+
+    <form method="GET" class="search-container-info">
+        {% csrf_token %}
+        <div class="search-container">
+            <input type="text" placeholder="Search for patients..." id="q" name='q'>
+            <button type="submit">Search <i class="fa fa-search"></i></button>
+        </div>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Full Name</th>
+                <th>Date of Birth</th>
+                <th>Address</th>
+                <th>Action</th>
+                <th>Admision</th>
+                <th>Bill</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for patient in patients %}
+            <tr>
+                <td>{{ patient.Patient_ID }}</td>
+                <td>{{ patient.Name }}</td>
+                <td>{{ patient.Date_Of_Birth }}</td>
+                <td>{{ patient.Address }}</td>
+
+                <td class="action-icons">
+                    <a href="{% url 'remove_patient' patient.Patient_ID %}">
+                        <i class="fas fa-trash delete-icon"></i>
+                    </a>
+                    <a href="{% url 'edit_patient' patient.Patient_ID %}">
+                        <i class="fas fa-edit edit-icon"></i>
+                    </a>
+                </td>
+                
+                <td>
+                    <a href="{% url 'add_admission' patient.Patient_ID %}">
+                        <i class="fas fa-plus edit-icon"></i>
+                    </a>
+                </td>
+
+                <td>
+                    <a href="{% url 'bill' patient.Patient_ID %}">
+                        <i class="fas fa-solid fa-receipt edit-icon"></i>                   
+                     </a> 
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Plus sign icon positioned at the bottom right corner of the page -->
+    <div class="add-info">
+        <a href="{% url 'add_patient' %}">
+            <i class="fas fa-plus-circle plus-icon"></i>
+        </a>
+    </div>
+</body>
+</html>

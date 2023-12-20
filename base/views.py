@@ -12,137 +12,122 @@ def start(request):
 
 ######################################## patient crud
 def add_patient(request):
-    if request.method=="POST":
-        patient=Patient.objects.create(
-            FullName=request.POST.get("fullname"),
-            DOB=request.POST.get("dob"),
-            Gender=request.POST.get("patient_gender"),
-            Address=request.POST.get("address")
+    if request.method == "POST":
+        patient = Patient.objects.create(
+            Name=request.POST.get("fullname"),
+            Date_Of_Birth=request.POST.get("dob"),
+            Address=request.POST.get("address"),
+            Phone_Number=request.POST.get("phone_number")
         )
-        patient.save()
         return redirect('patient')
-        # return render(request,'home')
-    return render(request,'base/add_patient.html')
+    return render(request, 'base/patient/add_patient.html')
 
 
 def patient(request):
-    q=request.GET.get('q') if request.GET.get('q')!= None else ''
-    patients=Patient.objects.filter(FullName__icontains=q)
-    context={'patients':patients}
-    return render(request,'base/patient.html',context)
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+    patients = Patient.objects.filter(Name__icontains=q)
+    context = {'patients': patients}
+    return render(request, 'base/patient/patient.html', context)
 
-def remove_patient(request,pk):
-    patient=Patient.objects.get(PatientID=pk)
-    print(patient)
+
+def remove_patient(request, pk):
+    patient = Patient.objects.get(Patient_ID=pk)
     patient.delete()
     return redirect('patient')
 
-def edit_patient(request,pk):
-    patient=Patient.objects.get(PatientID=pk)
-    if request.method=="POST":
-        patient.FullName=request.POST.get("fullname")
-        patient.Gender=request.POST.get("patient_gender")
-        patient.DOB=request.POST.get("dob")
-        patient.Address=request.POST.get("address")
+
+def edit_patient(request, pk):
+    patient = Patient.objects.get(Patient_ID=pk)
+    if request.method == "POST":
+        patient.Name = request.POST.get("fullname")
+        patient.Date_Of_Birth = request.POST.get("dob")
+        patient.Address = request.POST.get("address")
+        patient.Phone_Number = request.POST.get("phone_number")
         patient.save()
         return redirect('patient')
-    patient=Patient.objects.get(PatientID=pk)
-    context={'patient':patient}
-    print(patient.DOB)
-    return render(request,'base/edit_patient.html',context)
-
-def add_patient_mobile(request,pk):
-    if request.method=="POST":
-        patient=Patient.objects.filter(PatientID=pk)
-        mobilenumber=Patient_ContactDetails.objects.create(
-        PatientID=patient[0],
-        ContactDetails=request.POST.get("mobile_number"))
-        mobilenumber.save()
-        return redirect('patient')
-    return render(request,'base/add_mobile.html')
+    context = {'patient': patient}
+    return render(request, 'base/patient/edit_patient.html', context)
 
 
 ############################### doctor crud
 def doctor(request):
-    q=request.GET.get("q") if request.GET.get("q")!=None else '' 
-    doctors=Doctor.objects.prefetch_related("doctor_contactdetails_set").filter(Name__icontains=q)
-    context={'doctors':doctors}
-    return render(request,'base/doctors.html',context)
+    q = request.GET.get("q") if request.GET.get("q") else ''
+    doctors = Doctor.objects.filter(Name__icontains=q)
+    context = {'doctors': doctors}
+    return render(request, 'base/doctor/doctors.html', context)
 
 def add_doctor(request):
-    if request.method=="POST":
-        doctor=Doctor.objects.create(
+    if request.method == "POST":
+        doctor = Doctor.objects.create(
             Name=request.POST.get('doctor_name'),
-            Specialization=request.POST.get("doctor_specialization")
+            Specialization=request.POST.get("doctor_specialization"),
+            Phone_Number=request.POST.get("Phone_Number"),
+            Appointment_Price=request.POST.get("Appointment_Price")
         )
         doctor.save()
-        mobilenumber=Doctor_ContactDetails.objects.create(
-            DoctorID=doctor,
-            ContactDetails=request.POST.get("mobile_number"))
-        mobilenumber.save()
         return redirect('doctors')
-    specializationList=Doctor.specializationList
-    context={'specializations':specializationList}
-    return render(request,'base/add_doctor.html',context)
+    specializationList = Doctor.SPECIALIZATION_CHOICES
+    context = {'specializations': specializationList}
+    return render(request, 'base/doctor/add_doctor.html', context)
 
-def edit_doctor(request,pk):
-    doctor=Doctor.objects.get(DoctorID=pk)
-    if request.method=="POST":
-        doctor.Name=request.POST.get("name")
-        doctor.Specialization=request.POST.get("doctor_specialization")
+def edit_doctor(request, pk):
+    doctor = Doctor.objects.get(Doctor_ID=pk)
+    if request.method == "POST":
+        doctor.Name = request.POST.get("name")
+        doctor.Specialization = request.POST.get("doctor_specialization")
+        doctor.Phone_Number=request.POST.get("phone_number")
+        doctor.Appointment_Price=request.POST.get("Appointment_Price")
         doctor.save()
         return redirect('doctors')
-    specializationList=Doctor.specializationList
-    context={'specializations':specializationList}
-    context={'doctor':doctor,'specializations':specializationList}
-    return render(request,'base/edit_doctor.html',context)
+    specializationList = Doctor.SPECIALIZATION_CHOICES
+    print(specializationList)
+    context = {'doctor': doctor, 'specializations': specializationList}
+    return render(request, 'base/doctor/edit_doctor.html', context)
 
-def remove_doctor(request,pk):
-    doctor=Doctor.objects.get(DoctorID=pk)
-    print(doctor)
+def remove_doctor(request, pk):
+    doctor = Doctor.objects.get(Doctor_ID=pk)
     doctor.delete()
     return redirect('doctors')
-
-def add_doctor_mobile(request,pk):
-    if request.method=="POST":
-        doctor=Doctor.objects.filter(DoctorID=pk)
-        mobilenumber=Doctor_ContactDetails.objects.create(
-        DoctorID=doctor[0],
-        ContactDetails=request.POST.get("mobile_number"))
-        mobilenumber.save()
-        return redirect('doctors')
-    return render(request,'base/add_mobile.html')
 
 #-----------------------------------------------------------------------------
 ############################## Appointment
 def appointment(request):
     q=request.GET.get('q') if request.GET.get('q')!= None else ''
-    appointments=Appointment.objects.filter(PatientID__FullName__icontains=q)
+    appointments=Appointment.objects.filter(Patient_ID__Name__icontains=q)
     print(appointments)
     context={'appointments':appointments}
-    return render(request,'base/Appointment.html',context)
+    return render(request,'base/appointment/Appointment.html',context)
 
 def add_appointment(request):
     if request.method == 'POST':
-        patient_name=request.POST.get('patient_id')  
-        patient_id=Patient.objects.filter(FullName=patient_name)
+        patient_name=request.POST.get('patient_id')
+        patient_id=Patient.objects.filter(Name__icontains=patient_name)
         doctor_name = request.POST.get('doctor_name')  
-        doctor_id=Doctor.objects.filter(Name=doctor_name)
-        print(patient_id)
-        print(doctor_id)
-        Appointment.objects.create(
-            Required_Specialization=doctor_id[0].Specialization,
-            PatientID=patient_id[0],
-            DoctorID=doctor_id[0],
+        doctor_id=Doctor.objects.filter(Name__icontains=doctor_name)
+
+        appointment=Appointment.objects.create(
+            Patient_ID=patient_id[0],
+            Doctor_ID=doctor_id[0],
         )
+        appointment.save()
+
+        bill=Bill.objects.create(
+        Total=doctor_id[0].Appointment_Price,
+        Patient_ID=patient_id[0],
+        Status='pending',
+        Reason=f"Dr {doctor_name} Appointment at {appointment.Date}"
+        )
+        bill.save()
         return redirect('appointment')
     patients=Patient.objects.all()
     doctors=Doctor.objects.all()
+    print(patients)
+    print(doctors)
     context={'patients':patients,"doctors":doctors}
-    return render(request,'base/add_appointment.html',context)
+    return render(request,'base/appointment/add_appointment.html',context)
 
 def remove_appointment(request,pk):
-    appointment=Appointment.objects.get(AppointmentID=pk)
+    appointment=Appointment.objects.get(Appointment_ID=pk)
     print(doctor)
     appointment.delete()
     return redirect('appointment')
@@ -153,21 +138,33 @@ def remove_appointment(request,pk):
 
 def discharge(request):
     q=request.GET.get('q') if request.GET.get('q')!= None else ''
-    discharges=Discharge.objects.filter(AdmissionID__PatientID__FullName__icontains=q)
+    discharges=Discharge.objects.filter(Admission_ID__Patient_ID__Name__icontains=q)
     context={'discharges':discharges}
     return render(request, 'base/Discharge.html',context)
 
+from datetime import datetime
+from django.shortcuts import get_object_or_404
+
 def add_discharge(request,pk):
-    if  request.method=="POST":
-        reason=request.POST.get('reason')
-        addmission=Admission.objects.filter(AdmissionID=pk)
-        discharge=Discharge.objects.create(
-            AdmissionID=addmission[0],
-            Reason=reason
-        )
-        discharge.save()
-        return redirect('discharge')
-    return render(request,'base/add_discharge.html')
+    admission=get_object_or_404(Admission,Admission_ID=pk)
+    admission.End_Date = datetime.now()
+    admission.save()
+    End_date_aware = timezone.make_aware(admission.End_Date, timezone=admission.End_Date.tzinfo)
+    diff = End_date_aware-admission.Start_Date
+    days=diff.days
+    roomprice=admission.Room_Number.Room_Price
+    patient=admission.Patient_ID
+    print(patient)
+    bil=Bill.objects.create(
+        Total=days*roomprice,
+        Status='Pending',
+        Patient_ID=patient,
+        Reason=f"Admission at {admission.Room_Number} for {days} days"
+
+    )
+    bil.save()
+    return redirect('admission')
+
 
 def remove_discharge(request,pk):
     discharge=Discharge.objects.filter(DischargeID=pk)
@@ -175,155 +172,160 @@ def remove_discharge(request,pk):
     return redirect('discharge')
 
 ############################## Stay Details and it's dependent view
-def staydetails(request):
-    q=request.GET.get('q') if request.GET.get('q')!= None else ''
-    details=StayDetails.objects.prefetch_related("staydetails_meals_set",
-    "staydetails_administeredtreatments_set","staydetails_conditionupdates_set").filter(
-        AdmissionID__PatientID__FullName__icontains=q)
-    context={'staydetails':details}
-    return render(request, 'base/Staydetails.html',context)
-
 def add_admin_tratment(request,pk):
     if request.method=="POST":
-        details=StayDetails.objects.filter(StayDetailsID=pk)
-        word=request.POST.get("admin_treatment")
-        admin_treatment=StayDetails_AdministeredTreatments.objects.create(
-            StayDetailsID=details[0],
-            AdministeredTreatments=word
+        admission=Admission.objects.filter(Admission_ID=pk)
+        patient=admission[0].Patient_ID
+        admintreatment=TreatmentAdmission.objects.create(
+            Treatment_Title=request.POST.get("treatment_title"),
+            Treatment_Details=request.POST.get("treatment_details"),
+            admission=admission[0],
+            price=request.POST.get("price")
         )
-        admin_treatment.save()
-        return  redirect('staydetails')
-    return render(request,'base/add_admin_treatment.html')
+        bill=Bill.objects.create(
+            Total=request.POST.get("price"),
+            Patient_ID=patient,
+            Status='pending',
+        )
+        admintreatment.save()
+        return redirect('admission')
+        
+    return render(request,'base/admin_treatment/add_admin_treatment.html')
 
-def add_condition_update(request,pk):
-    if request.method=="POST":
-        details=StayDetails.objects.filter(StayDetailsID=pk)
-        word=request.POST.get("condition_update")
-        condition_update=StayDetails_ConditionUpdates.objects.create(
-                StayDetailsID=details[0],
-                ConditionUpdates=word
-            )
-        condition_update.save()
-        return  redirect('staydetails')
-    return render(request,'base/add_condition_update.html')
+def admission_treatments(request,pk):
+    admission=Admission.objects.filter(Admission_ID=pk)
+    admission_treatment=TreatmentAdmission.objects.filter(admission=admission[0])
+    context={'admissiontreatment':admission_treatment}
+    return render(request,'base/admin_treatment/show_admission_treatments.html',context)
 
-def add_meal(request,pk):
-    if request.method=="POST":
-        details=StayDetails.objects.filter(StayDetailsID=pk)
-        word=request.POST.get("meal")
-        meal=StayDetails_Meals.objects.create(
-                StayDetailsID=details[0],
-                Meals=word
-            )
-        meal.save()
-        return  redirect('staydetails')
-    return render(request,'base/add_meals.html')
-
-def add_staydetails(request,pk):
-    admission=Admission.objects.filter(AdmissionID=pk)
-    staydetails=StayDetails.objects.create(
-        AdmissionID=admission[0]
-    )
-    staydetails.save()
-    return redirect('staydetails')
-
-def remove_staydetails(request,pk):
-    details=StayDetails.objects.filter(StayDetailsID=pk)
-    details.delete()
-    return redirect('staydetails')
-
+def remove_admission_treatment(request,pk):
+    treatment=TreatmentAdmission.objects.filter(Treatment_ID=pk)
+    treatment.delete()
+    return redirect('admission')
 
 #------------------------------Room ---------------------------
 ## Room Crud
 def room(request):
     q=request.GET.get('q') if request.GET.get('q')!= None else ''
-    rooms = Room.objects.filter(RoomNumber__icontains=q)
+    rooms = Room.objects.filter(Room_Number__icontains=q)
     context = {'rooms': rooms}
-    return render(request, 'base/Room.html', context)
+    return render(request, 'base/room/Room.html', context)
 
 def add_room(request):
     if request.method == "POST":
-        available=request.POST.get('availability')
-        if available=="Available":
-            available=True
-        else:
-            available=False
         room = Room.objects.create(
-            RoomNumber=request.POST.get('room_number'),
-            Type=request.POST.get('room_type'),
-            Availability=available
+            Room_Number=request.POST.get('room_number'),
+            Room_Type=request.POST.get('room_type'),
+            Room_Price=request.POST.get('Room_Price')
         )
         room.save()
         return redirect('room')
-    return render(request, 'base/add_room.html')
+    return render(request, 'base/room/add_room.html')
 
 def remove_room(request, pk):
-    room = Room.objects.get(RoomNumber=pk)
+    room = Room.objects.get(Room_Number=pk)
     room.delete()
     return redirect('room')
 
+def edit_room(request,pk):
+    room = Room.objects.get(Room_Number=pk)
+
+    if request.method=="POST":
+        room.Room_Number=request.POST.get('room_number')
+        room.Room_Type=request.POST.get('room_type')
+        room.Room_Price=request.POST.get('Room_Price')
+        room.save()
+        return redirect('room')
+    context={"room":room}
+    return render(request,'base/room/edit_room.html',context)
+
+
 #------------------------------- Treatment ---------------------------
 def treatment(request):
-    treatments=Treatment.objects.prefetch_related('treatment_medications_set').all()
+    treatments=Treatment.objects.all()
     context={'treatments':treatments}
-    return render(request, 'base/Treatment.html',context)
+    return render(request, 'base/treatment/Treatment.html',context)
 
 def remove_treatment(request,pk):
-    treatment=Treatment.objects.filter(TreatmentID=pk)
+    treatment=Treatment.objects.filter(Treatment_ID=pk)
     treatment.delete()
     return redirect('treatment')
+
 def add_treatment(request,pk):
     if request.method=="POST":
-        appointment=Appointment.objects.filter(AppointmentID=pk)
+        appointment=Appointment.objects.filter(Appointment_ID=pk)
+        print(appointment)
         treatment=Treatment.objects.create(
-            ProcedureDescription=request.POST.get('Procedure'),
-            AppointmentID=appointment[0]
+            Procedure=request.POST.get('Procedure'),
+            Appointment_ID=appointment[0],
+            Disease=request.POST.get("Disease")
         )
         treatment.save()
         return redirect('treatment')
-    return render(request,'base/add_treatment.html')
-
-
-# def medication(request,pk):
-#     meds=Treatment_Medications.objects.filter(TreatmentID=pk)
-#     context={'meds':meds}
-#     return render(request,'base/medications.html',context)
-
-
-def add_medicine(request,pk):
-    if request.POST.get("medicine"):
-        treatment=Treatment.objects.filter(TreatmentID=pk)
-        medicine=Treatment_Medications.objects.create(
-            TreatmentID=treatment[0],
-            Medications=request.POST.get('medicine')
-        )
-        medicine.save()
-        return redirect('treatment')
-    return render(request,'base/add_medicine.html')
-
+    return render(request,'base/treatment/add_treatment.html')
 
 ############################### Admission
 
 def add_admission(request,pk):
     if request.method=="POST":
-        patient=Patient.objects.filter(PatientID=pk)
-        room=Room.objects.filter(RoomNumber=request.POST.get('room_number'))
+        patient=Patient.objects.filter(Patient_ID=pk)
+        room=Room.objects.filter(Room_Number=request.POST.get('room_number'))
+        doctor=Doctor.objects.filter(Name=request.POST.get("doctor_name"))
         admission=Admission.objects.create(
-            PatientID=patient[0],
-            Reason=request.POST.get('reason'),
-            RoomNumber=room[0]
+            Patient_ID=patient[0],
+            Room_Number=room[0],
+            Doctor_ID=doctor[0]
         )
         admission.save()
         return redirect('admission')
-    return render(request,'base/add_admission.html')
+    doctors=Doctor.objects.all()
+    rooms=Room.objects.all()
+    context={'doctors':doctors,'rooms':rooms}
+    return render(request,'base/admission/add_admission.html',context)
 
 def remove_admission(request,pk):
-    admission=Admission.objects.filter(AdmissionID=pk)
+    admission=Admission.objects.filter(Admission_ID=pk)
     admission.delete()
     return redirect('admission')
 
 def admission(request):
     q=request.GET.get('q') if request.GET.get('q')!= None else ''
-    admissions=Admission.objects.filter(PatientID__FullName__icontains=q)
+    admissions=Admission.objects.filter(Patient_ID__Name__icontains=q)
     context={'admissions':admissions}
-    return render(request,'base/Admission.html',context)
+    return render(request,'base/admission/Admission.html',context)
+
+def bill(request,pk):
+    patient=get_object_or_404(Patient,Patient_ID=pk)
+    bills=Bill.objects.filter(Patient_ID=patient,Status="pending")
+    print(bills)
+    context={'bills':bills}
+    return render(request,'base/bill/bill.html' ,context)
+
+def paybill(request,pk):
+    bill=get_object_or_404(Bill,Bill_ID=pk)
+    bill.Status="Payed"
+    bill.save()
+    return redirect('patient')
+
+def add_employee(request):
+    if request.method=="POST":
+        employee=Employee.objects.create(
+            Name=request.POST.get("name"),
+            Phone_Number=request.POST.get("phone_number"),
+            Role=request.POST.get("role")
+        )
+        employee.save()
+        room=get_object_or_404(Room,Room_Number=request.POST.get('room_number'))
+        employeeroom=Employee_Room.objects.create(
+            Employee_ID=employee,
+            Room_Number=room
+        )
+    rooms=Room.objects.all()
+    context={"rooms":rooms}
+    return render(request,'base/employee/add_employee.html',context)
+
+def employee(request):
+    employee=Employee.objects.all().prefetch_related('employee_room_set')
+    print(employee)
+    context={'employees':employee}
+    return render(request,'base/employee/employees.html',context)

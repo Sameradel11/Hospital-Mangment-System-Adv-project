@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Add Employee</title>
+    <link rel="stylesheet" href="{% static 'base/add.css' %}">
+</head>
+<body>
+    <h2>Add Employee</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required />
+        
+        <label for="phone_number">Phone Number:</label>
+        <input type="text" id="phone_number" name="phone_number" required />
+        
+        <label for="role">Role:</label>
+        <input type="text" id="role" name="role" required />
+
+        <label for="room">Room Number:</label>
+        <input type="text" id="role" name="room_number" list="room-list" required />
+        <datalist id="room-list">
+            <select id="room-list" name="room"required >
+                {% for room in rooms %}
+                <option value="{{ room.Room_Number }}">{{ room.Room_Type }}</option>
+                {% endfor %}
+            </select>
+        </datalist>
+        
+        <input type="submit" value="Add Employee">
+    </form>
+</body>
+</html>

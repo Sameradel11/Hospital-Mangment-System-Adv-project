@@ -1,105 +1,108 @@
 from django.db import models
 
-# Create your models here.
-from django.db import models
-from django.utils import timezone
-
-
 class Patient(models.Model):
-    PatientID = models.AutoField(primary_key=True)
-    FullName = models.CharField(max_length=100)
-    DOB = models.DateField()
-    Gender = models.CharField(max_length=10)
-    Address = models.CharField(max_length=255, blank=True, null=True)
+    Patient_ID = models.AutoField(primary_key=True)
+    Name = models.CharField(max_length=30)
+    Address = models.CharField(max_length=100)
+    Phone_Number = models.CharField(max_length=14)
+    Date_Of_Birth = models.DateField()
+
     def __str__(self):
-        return self.FullName
+        return f"Patient ID: {self.Patient_ID}, Name: {self.Name}"
 
 class Doctor(models.Model):
-    specializationList=['Cardiology','Dermatology','Neurology','Orthopedics',
-    'Ophthalmology','Oncology','Psychiatry','Pediatrics']
-    DoctorID = models.AutoField(primary_key=True)
-    Name = models.CharField(max_length=100)
-    Specialization = models.CharField(max_length=100)
+    SPECIALIZATION_CHOICES = [
+        'Cardiologist',
+        'Dermatologist',
+        'Neurologist',
+        'Pediatrician',
+        'Ophthalmologist',
+        'Orthopedic Surgeon',
+        'Gynecologist',
+        'ENT Specialist',
+        'Psychiatrist',
+        'Urologist',
+    ]
+    Doctor_ID = models.AutoField(primary_key=True)
+    Name = models.CharField(max_length=30)
+    Specialization = models.CharField(max_length=20)
+    Phone_Number = models.CharField(max_length=14)
+    Appointment_Price = models.IntegerField()
+
     def __str__(self):
-        return self.Name
+        return f"Doctor ID: {self.Doctor_ID}, Name: {self.Name}"
 
 class Appointment(models.Model):
-    AppointmentID = models.AutoField(primary_key=True)
-    Date = models.DateField(auto_now_add=True)
-    Time = models.TimeField(auto_now_add=True)
-    Required_Specialization = models.CharField(max_length=100)
-    PatientID = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    DoctorID = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    Appointment_ID=models.AutoField(primary_key=True)
+    Date = models.DateTimeField(auto_now_add=True)
+    Patient_ID = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    Doctor_ID = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     def __str__(self):
-        return f'{self.PatientID.FullName} Appointment'
+        return f"Patient: {self.Patient_ID.Name}|Doctor: {self.Doctor_ID.Name}|Specialization: {self.Doctor_ID.Specialization}"
 
 class Treatment(models.Model):
-    TreatmentID = models.AutoField(primary_key=True)
-    ProcedureDescription = models.TextField()
-    AppointmentID = models.ForeignKey(Appointment, on_delete=models.CASCADE)
+    Treatment_ID = models.AutoField(primary_key=True)
+    Procedure = models.CharField(max_length=255)
+    Disease = models.CharField(max_length=255)
+    Appointment_ID = models.ForeignKey(Appointment, on_delete=models.CASCADE)
+
     def __str__(self):
-        return str(self.TreatmentID)
+        return f"Treatment ID: {self.Treatment_ID}, Procedure: {self.Procedure}, Disease: {self.Disease}"
 
 class Room(models.Model):
-    RoomNumber = models.AutoField(primary_key=True)
-    Type = models.CharField(max_length=50)
-    Availability = models.BooleanField()
+    Room_ID=models.AutoField(primary_key=True,default=3)
+    Room_Number = models.CharField(max_length=20)
+    Room_Type = models.CharField(max_length=20)
+    Room_Price = models.IntegerField()
     def __str__(self):
-        return str(self.RoomNumber)
+        return f"Room Number: {self.Room_Number}, Type: {self.Room_Type}"
+
+class Bill(models.Model):
+    Bill_ID = models.AutoField(primary_key=True)
+    Date = models.DateTimeField(auto_now_add=True)
+    Status = models.CharField(max_length=10)
+    Total = models.IntegerField()
+    Patient_ID = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    Reason=models.CharField(max_length=255,default="Reason")
+    def __str__(self):
+        return f"Bill ID: {self.Bill_ID}, Total: {self.Total}"
+
+class Employee(models.Model):
+    Employee_ID = models.AutoField(primary_key=True)
+    Name = models.CharField(max_length=30)
+    Phone_Number = models.CharField(max_length=14)
+    Role = models.CharField(max_length=255)
+    def __str__(self):
+        return f"Employee ID: {self.Employee_ID}, Name: {self.Name}"
+
+class Employee_Room(models.Model):
+    Employee_ID = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    Room_Number = models.ForeignKey(Room, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('Employee_ID', 'Room_Number')
+
+    def __str__(self):
+        return f"Employee ID: {self.Employee_ID}, Room Number: {self.Room_Number}"
+from django.utils import timezone
 
 class Admission(models.Model):
-    AdmissionID = models.AutoField(primary_key=True)
-    AdmissionDate = models.DateField(auto_now_add=True)
-    Reason = models.CharField(max_length=255,null=True)
-    PatientID = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    RoomNumber = models.ForeignKey(Room, on_delete=models.CASCADE)
+    Admission_ID = models.AutoField(primary_key=True)
+    Start_Date = models.DateTimeField(default=timezone.now)
+    End_Date = models.DateTimeField(null=True)
+    Patient_ID = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    Doctor_ID = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    Room_Number = models.ForeignKey(Room, on_delete=models.CASCADE)
+
     def __str__(self):
-        return str(self.PatientID.FullName)
+        return f"Admission ID: {self.Admission_ID}, Start Date: {self.Start_Date}"
 
-class StayDetails(models.Model):
-    StayDetailsID = models.AutoField(primary_key=True)
-    Date = models.DateField(auto_now_add=True)
-    AdmissionID = models.ForeignKey(Admission, on_delete=models.CASCADE)
-
-class Discharge(models.Model):
-    DischargeID = models.AutoField(primary_key=True)
-    DischargeDate = models.DateField(auto_now_add=True)
-    Reason = models.CharField(max_length=255)
-    AdmissionID = models.ForeignKey(Admission, on_delete=models.CASCADE)
-
-class Patient_ContactDetails(models.Model):
-    ContactDetails = models.CharField(max_length=100, primary_key=True)
-    PatientID = models.ForeignKey(Patient, on_delete=models.CASCADE)
-
-class Doctor_ContactDetails(models.Model):
-    ContactDetails = models.CharField(max_length=100, primary_key=True)
-    DoctorID = models.ForeignKey(Doctor, on_delete=models.CASCADE)
-
-
-class StayDetails_Meals(models.Model):
-    dateadded = models.DateTimeField(primary_key=True,auto_now_add=True)
-    Meals = models.CharField(max_length=100)
-    StayDetailsID = models.ForeignKey('StayDetails', on_delete=models.CASCADE)
-
-class StayDetails_AdministeredTreatments(models.Model):
-    dateadded = models.DateTimeField(primary_key=True, auto_now_add=True)
-    AdministeredTreatments = models.CharField(max_length=255)
-    StayDetailsID = models.ForeignKey('StayDetails', on_delete=models.CASCADE)
-
-class StayDetails_ConditionUpdates(models.Model):
-    dateadded = models.DateTimeField(primary_key=True, auto_now_add=True)
-    ConditionUpdates = models.CharField(max_length=255)
-    StayDetailsID = models.ForeignKey('StayDetails', on_delete=models.CASCADE)
-
-class Treatment_TestResults(models.Model):
-    dateadded = models.DateTimeField(primary_key=True, auto_now_add=True)
-    TestResults = models.CharField(max_length=100)
-    TreatmentID = models.ForeignKey('Treatment', on_delete=models.CASCADE)
-
-class Treatment_Medications(models.Model):
-    dateadded = models.DateTimeField(primary_key=True, auto_now_add=True)
-    Medications = models.CharField(max_length=100)
-    TreatmentID = models.ForeignKey('Treatment', on_delete=models.CASCADE)
+class TreatmentAdmission(models.Model):
+    Treatment_ID = models.AutoField(primary_key=True)
+    Treatment_Title = models.CharField(max_length=255)
+    Treatment_Details = models.TextField(max_length=255)
+    DateTime = models.DateTimeField(auto_now_add=True)
+    admission = models.ForeignKey(Admission, on_delete=models.CASCADE)
+    price=models.IntegerField()
     def __str__(self):
-        return self.Medications
-    
+        return f"Treatment ID: {self.Treatment_ID}, Title: {self.Treatment_Title}"

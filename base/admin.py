@@ -6,12 +6,11 @@ admin.site.register(Patient)
 admin.site.register(Doctor)
 admin.site.register(Appointment)
 admin.site.register(Treatment)
-admin.site.register(Treatment_Medications)
-admin.site.register(Discharge)
-admin.site.register(StayDetails)
-admin.site.register(StayDetails_AdministeredTreatments)
-admin.site.register(StayDetails_ConditionUpdates)
-admin.site.register(StayDetails_Meals)
+admin.site.register(Room)
+admin.site.register(Admission)
+admin.site.register(Bill)
+admin.site.register(TreatmentAdmission)
+
 
 
 

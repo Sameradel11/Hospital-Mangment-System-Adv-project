@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Patients Information</title>
+    <link rel="stylesheet" href="{% static 'base/project.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <h2>Bill Information</h2>
+
+    <form method="GET" class="search-container-info">
+        {% csrf_token %}
+        <div class="search-container">
+            <input type="text" placeholder="Search for patients..." id="q" name='q'>
+            <button type="submit">Search <i class="fa fa-search"></i></button>
+        </div>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Bill ID</th>
+                <th>Patient ID</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Reason</th>
+                <th>Total</th>
+                <th>Pay</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bill in bills %}
+            <tr>
+                <td>{{ bill.Bill_ID }}</td>
+                <td>{{ bill.Patient_ID }}</td>
+                <td>{{ bill.Date }}</td>
+                <td>{{ bill.Status }}</td>
+                <td>{{ bill.Reason }} </td>
+                <td>{{ bill.Total }}</td>
+                <td>
+                    <a href="{% url 'pay_bill' bill.Bill_ID %}">
+                        <i class="fas fa-solid fa-credit-card edit-icon"></i>                   
+                    </a> 
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Plus sign icon positioned at the bottom right corner of the page -->
+    <div class="add-info">
+        <a href="{% url 'add_patient' %}">
+            <i class="fas fa-plus-circle plus-icon"></i>
+        </a>
+    </div>
+</body>
+</html>

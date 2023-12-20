@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Patient</title>
+    <link rel="stylesheet" href="{% static 'base/edit_patient.css' %}">
+</head>
+<body>
+    <h2>Edit Patient</h2>
+    <form method="POST" >
+        {% csrf_token %}
+        <div>
+            <label for="fullname">Full Name:</label>
+            <input type="text" id="fullname" name="fullname" value="{{ patient.Name }}">
+        </div>
+        
+        <div>
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" value="{{ patient.Date_Of_Birth|date:"Y-m-d" }}">
+        </div>
+        <div>
+            <label for="phone_number" >Phone Number: </label>
+            <input type="text" id="list" name="phone_number" value="{{ patient.Phone_Number }}" required/><br>
+        </div>
+        <div>
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" value="{{ patient.Address }}">
+        </div>
+        <button type="submit">Update</button>
+    </form>
+</body>
+</html>
