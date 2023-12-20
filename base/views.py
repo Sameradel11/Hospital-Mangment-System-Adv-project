@@ -320,6 +320,7 @@ def add_employee(request):
             Employee_ID=employee,
             Room_Number=room
         )
+        return redirect('employee')
     rooms=Room.objects.all()
     context={"rooms":rooms}
     return render(request,'base/employee/add_employee.html',context)
@@ -329,3 +330,23 @@ def employee(request):
     print(employee)
     context={'employees':employee}
     return render(request,'base/employee/employees.html',context)
+
+def remove_employee(request, pk):
+    emp = Employee.objects.get(Employee_ID=pk)
+    emp.delete()
+    return redirect('employee')
+
+def add_employee_room(request,pk):
+    if request.method=="POST":
+        emp = Employee.objects.get(Employee_ID=pk)
+        room = Room.objects.get(Room_Number=request.POST.get('room_number'))
+
+        emproom=Employee_Room.objects.create(
+            Employee_ID=emp,
+            Room_Number=room
+        )
+        emproom.save()
+        return redirect('employee')
+    rooms=Room.objects.all()
+    context={'rooms':rooms}
+    return render(request,'base/employee/add_employee_room.html',context)

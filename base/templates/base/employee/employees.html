@@ -25,8 +25,8 @@
                 <th>Name</th>
                 <th>Phone Number</th>
                 <th>Role</th>
-                <th>Action</th>
                 <th>Room Number</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -36,14 +36,22 @@
                 <td>{{ employee.Name }}</td>
                 <td>{{ employee.Phone_Number }}</td>
                 <td>{{ employee.Role }}</td>
-                
+
+                <td>
                 {% for room in employee.employee_room_set.all  %}
-                <td>{{ room.Room_Number }}</td>
-                
-                {% endfor %}
+
+                    <p>
+                        {{ room.Room_Number }} 
+                    <a href="{% url 'add_employee_room' employee.Employee_ID %}">
+                        <i class="fas fa-plus edit-icon"></i>
+                    </a>    
+                        {% endfor %}
+                    </p>
+
+                </td>
                 
                 <td class="action-icons">
-                    <a href="">
+                    <a href="{% url 'remove_employee' employee.Employee_ID %}">
                         <i class="fas fa-trash delete-icon"></i>
                     </a>
                 </td>

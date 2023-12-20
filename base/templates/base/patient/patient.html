@@ -25,6 +25,7 @@
                 <th>Full Name</th>
                 <th>Date of Birth</th>
                 <th>Address</th>
+                <th>Mobile Number</th>
                 <th>Action</th>
                 <th>Admision</th>
                 <th>Bill</th>
@@ -37,6 +38,7 @@
                 <td>{{ patient.Name }}</td>
                 <td>{{ patient.Date_Of_Birth }}</td>
                 <td>{{ patient.Address }}</td>
+                <td>{{ patient.Phone_Number }}</td>
 
                 <td class="action-icons">
                     <a href="{% url 'remove_patient' patient.Patient_ID %}">

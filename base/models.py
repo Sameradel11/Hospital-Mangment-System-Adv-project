@@ -50,7 +50,7 @@ class Treatment(models.Model):
         return f"Treatment ID: {self.Treatment_ID}, Procedure: {self.Procedure}, Disease: {self.Disease}"
 
 class Room(models.Model):
-    Room_ID=models.AutoField(primary_key=True,default=3)
+    Room_ID=models.AutoField(primary_key=True)
     Room_Number = models.CharField(max_length=20)
     Room_Type = models.CharField(max_length=20)
     Room_Price = models.IntegerField()

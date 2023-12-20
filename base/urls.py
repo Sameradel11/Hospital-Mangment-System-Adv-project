@@ -42,6 +42,7 @@ urlpatterns = [
     path('remove_admission_treatment/<str:pk>',views.remove_admission_treatment,name='remove_admission_treatment')
     ,path('pay_bill/<str:pk>',views.paybill,name='pay_bill')
     ,path('add_employee',views.add_employee,name='add_employee')
-    # ,path('remove_employee',views.remove_employee,name='remove_employee'),
+    ,path('remove_employee,<str:pk>',views.remove_employee,name='remove_employee')
     ,path('employee',views.employee,name='employee')
+    ,path('add_employee_room/<str:pk>',views.add_employee_room,name='add_employee_room')
 ]
