@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-w&=4m(c7v+7^h3-)sy)+c%4w4&vq29xu-1=lb&f9ml9b!-tdnn
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.vercel.app']
 
 
 # Application definition
@@ -81,7 +81,7 @@ DATABASES = {
             'HOST': 'DESKTOP-B6F3DM0\SQLEXPRESS',
             'NAME': 'adv',
             'USER': 'samertest1',
-            'PASSWORD': 'samerco11',
+            'PASSWORD': 'samertest1',
             'OPTIONS': {
                 'driver': 'ODBC Driver 17 for SQL Server',
             },
